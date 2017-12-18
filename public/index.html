@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Garage-Bin</title>
+  </head>
+  <body>
+    <header>
+      <h1 id='welcome-title'>Welcome to Garage Bin!</h1>
+      <h3 id='instructions'>Fill out the form below to add an item to the garage.</h3>
+      <form>
+        <input type='text' id='name' name='name' placeholder='Item name'></input>
+        <select name='cleanliness' id='cleanliness'>
+          <option label>Choose Cleanliness</option>
+          <option value="Sparkling">Sparkling</option>
+          <option value="Dusty">Dusty</option>
+          <option value="Rancid">Rancid</option>
+        </select>
+        <textarea id='reason' name='reason' placeholder='Reason item is in garage'></textarea>
+        <button id='submit' type='submit'>Submit</button>
+      </form>
+    </header>
+    <main id='garage-container'>
+      <h3 id='garage-items-title'>Click on the garage door to see what's inside!</h3>
+      <div id='garage'>
+
+      </div>
+    </main>
+  </body>
+</html>
