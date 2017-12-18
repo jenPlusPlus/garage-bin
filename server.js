@@ -54,6 +54,21 @@ app.post('/api/v1/items', (request, response) => {
   return null;
 });
 
+app.patch('/api/v1/items/:id', (request, response) => {
+  const garageItemID = request.params.id;
+  const { name, reason, cleanliness } = request.body;
+  const garageItem = { name, reason, cleanliness };
+
+  database('garage_items').where('id', garageItemID).update(garageItem, '*')
+    .then((updatedGarageItem) => {
+      if (!updatedGarageItem.length) {
+        return response.status(404).json({ error: `Could not find any item associated with id ${request.params.id}` });
+      }
+      return response.status(202).json({ team: updatedGarageItem[0] });
+    })
+    .catch(error => response.status(500).json({ error }));
+});
+
 
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on ${app.get('port')}`);
