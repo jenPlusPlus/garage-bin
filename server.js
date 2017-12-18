@@ -1,3 +1,5 @@
+/* eslint no-restricted-syntax: 0 */
+
 const express = require('express');
 const path = require('path');
 
@@ -34,6 +36,24 @@ app.get('/api/v1/items/:id', (request, response) => {
     })
     .catch(error => response.status(500).json({ error }));
 });
+
+app.post('/api/v1/items', (request, response) => {
+  const { name, reason, cleanliness } = request.body;
+  const garageItem = { name, reason, cleanliness };
+
+  for (const requiredParameter of ['name', 'reason', 'cleanliness']) {
+    if (!garageItem[requiredParameter]) {
+      return response.status(422).json({ error: `You are missing the '${requiredParameter}' property` });
+    }
+  }
+
+  database('garage_items').insert(garageItem, 'id')
+    .then(insertedGarageItem => response.status(201).json({ id: insertedGarageItem[0] }))
+    .catch(error => response.status(500).json({ error }));
+
+  return null;
+});
+
 
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on ${app.get('port')}`);
