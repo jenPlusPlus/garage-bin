@@ -1,0 +1,36 @@
+{
+  "name": "garage-bin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "./node_modules/.bin/eslint ./db/. ./public/."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jenPlusPlus/garage-bin.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jenPlusPlus/garage-bin/issues"
+  },
+  "homepage": "https://github.com/jenPlusPlus/garage-bin#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "dotenv": "^4.0.0",
+    "express": "^4.16.2",
+    "knex": "^0.14.2",
+    "pg": "^7.4.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.0.3",
+    "chai": "^4.1.2",
+    "chai-http": "git+https://github.com/chaijs/chai-http.git#3ea4524",
+    "eslint": "^4.13.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "mocha": "^4.0.1"
+  }
+}
