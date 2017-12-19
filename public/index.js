@@ -4,18 +4,33 @@ const addItemDetails = () => {
   // change div display to block/inline-block
 };
 
-const updateCleanlinessDB = (item, cleanliness) => {
-  console.log(cleanliness);
-  const updatedItem = Object.assign({}, item, { cleanliness });
-  console.log(updatedItem);
-  fetch(`/api/v1/items/${item.id}`, {
+const getCleanlinessCount = async (cleanlinessLevel) => {
+  let cleanlinessCount;
+  await fetch('/api/v1/items')
+    .then(items => items.json())
+    .then((parsedItems) => {
+      cleanlinessCount = parsedItems.garageItems
+        .filter(item => item.cleanliness === cleanlinessLevel).length;
+    })
+    .catch(error => console.error({ error }));
+
+  // why is the console.log right and the return wrong???
+  console.log('cleanlinessCount: ', cleanlinessLevel, cleanlinessCount);
+  return cleanlinessCount;
+};
+
+const updateCleanlinessDB = async (id, oldCleanliness, cleanliness) => {
+  await fetch(`/api/v1/items/${id}`, {
     method: 'PATCH',
     body: JSON.stringify({ cleanliness }),
     headers: {
       'Content-Type': 'application/json',
     },
-  })
+  }).then()
     .catch((error) => { throw error; });
+
+  $(`#item-count-${oldCleanliness}`).text(`${getCleanlinessCount(oldCleanliness)}`);
+  $(`#item-count-${cleanliness}`).text(`${getCleanlinessCount(cleanliness)}`);
 };
 
 const isSelected = (selectedValue, cleanlinessLevel) => {
@@ -26,6 +41,7 @@ const isSelected = (selectedValue, cleanlinessLevel) => {
 };
 
 const appendItem = (item) => {
+  let oldCleanlinessLevel;
   $('#garage').append(`
     <div class='garage-item' id='item-${item.id}'>
       <h4 id='item-name-${item.id} class='garage-item-name'>${item.name}</h4>
@@ -33,14 +49,15 @@ const appendItem = (item) => {
           <p id='item-reason-${item.id}'>Reason for Lingering: ${item.reason}</p>
           <p>To change the item's cleanliness, select a new option below.</p>
           <select id='item-cleanliness-input-${item.id}'>
-            <option value="Sparkling" ${isSelected('Sparkling', item.cleanliness)} >Sparkling</option>
-            <option value="Dusty" ${isSelected('Dusty', item.cleanliness)}>Dusty</option>
-            <option value="Rancid" ${isSelected('Rancid', item.cleanliness)}>Rancid</option>
+            <option id='item-sparkling-${item.id}' value="Sparkling" ${isSelected('Sparkling', item.cleanliness)} >Sparkling</option>
+            <option id='item-dusty-${item.id}' value="Dusty" ${isSelected('Dusty', item.cleanliness)}>Dusty</option>
+            <option id='item-rancid-${item.id}' value="Rancid" ${isSelected('Rancid', item.cleanliness)}>Rancid</option>
           </select>
         </div>
     </div>`);
   $('.garage-item-name').on('click', addItemDetails);
-  $(`#item-cleanliness-input-${item.id}`).on('change', (event) => updateCleanlinessDB(item, $(`#item-cleanliness-input-${item.id}`).val()));
+  $(`#item-cleanliness-input-${item.id}`).on('click', () => { oldCleanlinessLevel = $(`#item-cleanliness-input-${item.id}`).val(); });
+  $(`#item-cleanliness-input-${item.id}`).on('change', () => updateCleanlinessDB(item.id, oldCleanlinessLevel, $(`#item-cleanliness-input-${item.id}`).val()));
 };
 
 const sort = async () => {
@@ -84,15 +101,11 @@ const increaseItemCount = (cleanlinessLevel) => {
   $(`#item-count-${cleanlinessLevel.toLowerCase()}`).text(cleanlinessCount);
 };
 
-const getCleanlinessCount = (garageItems, cleanlinessLevel) => {
-  return garageItems.filter(item => item.cleanliness === cleanlinessLevel).length;
-};
-
 const getTotalItemCount = (items) => {
   $('#item-count').text(`${items.length}`);
-  $('#item-count-sparkling').text(`${getCleanlinessCount(items, 'Sparkling')}`);
-  $('#item-count-dusty').text(`${getCleanlinessCount(items, 'Dusty')}`);
-  $('#item-count-rancid').text(`${getCleanlinessCount(items, 'Rancid')}`);
+  $('#item-count-sparkling').text(`${getCleanlinessCount('Sparkling')}`);
+  $('#item-count-dusty').text(`${getCleanlinessCount('Dusty')}`);
+  $('#item-count-rancid').text(`${getCleanlinessCount('Rancid')}`);
 };
 
 const getAllItems = () => {

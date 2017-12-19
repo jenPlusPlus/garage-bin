@@ -63,7 +63,7 @@ app.patch('/api/v1/items/:id', (request, response) => {
       if (!updatedGarageItem.length) {
         return response.status(404).json({ error: `Could not find any item associated with id ${request.params.id}` });
       }
-      return response.status(202).json({ garageItem: updatedGarageItem[0] });
+      return response.status(201).json({ garageItem: updatedGarageItem[0] });
     })
     .catch(error => response.status(500).json({ error }));
 });
