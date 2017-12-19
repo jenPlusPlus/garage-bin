@@ -18,6 +18,13 @@ const updateCleanlinessDB = (item, cleanliness) => {
     .catch((error) => { throw error; });
 };
 
+const isSelected = (selectedValue, cleanlinessLevel) => {
+  if (selectedValue === cleanlinessLevel) {
+    return 'selected';
+  }
+  return '';
+};
+
 const appendItem = (item) => {
   $('#garage').append(`
     <div class='garage-item' id='item-${item.id}'>
@@ -26,9 +33,9 @@ const appendItem = (item) => {
           <p id='item-reason-${item.id}'>Reason for Lingering: ${item.reason}</p>
           <p>To change the item's cleanliness, select a new option below.</p>
           <select id='item-cleanliness-input-${item.id}'>
-            <option value="Sparkling">Sparkling</option>
-            <option value="Dusty">Dusty</option>
-            <option value="Rancid">Rancid</option>
+            <option value="Sparkling" ${isSelected('Sparkling', item.cleanliness)} >Sparkling</option>
+            <option value="Dusty" ${isSelected('Dusty', item.cleanliness)}>Dusty</option>
+            <option value="Rancid" ${isSelected('Rancid', item.cleanliness)}>Rancid</option>
           </select>
         </div>
     </div>`);
