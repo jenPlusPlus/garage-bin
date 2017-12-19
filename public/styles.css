@@ -37,6 +37,10 @@ main {
   text-align: center;
 }
 
+#garage {
+  background-image: url('./../assets/garage_door.jpg');
+}
+
 .garage-item {
   margin: 10px;
 }
