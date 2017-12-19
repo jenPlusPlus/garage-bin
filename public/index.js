@@ -1,13 +1,86 @@
 /* eslint-disable no-undef */
 
+const addItemDetails = () => {
+  // change div display to block/inline-block
+};
+
+const appendItem = (item) => {
+  $('#garage').append(`
+    <div class='garage-item' id='item-${item.id}'>
+      <h4 id='item-name-${item.id} class='garage-item-name'>${item.name}</h4>
+        <div class='item-details'>
+          <p id='item-reason-${item.id}'>Reason for Lingering: ${item.reason}</p>
+          <p>To change the item's cleanliness, select a new option below.</p>
+          <select id='item-cleanliness-input-${item.id}'>
+            <option value="Sparkling">Sparkling</option>
+            <option value="Dusty">Dusty</option>
+            <option value="Rancid">Rancid</option>
+          </select>
+        </div>
+    </div>`);
+  $('.garage-item-name').on('click', addItemDetails);
+};
+
+const sort = async () => {
+  $('.garage-item').remove();
+  let sortedArray = [];
+
+  await fetch('/api/v1/items')
+    .then(items => items.json())
+    .then((parsedItems) => {
+      if (parsedItems.garageItems.length) {
+        const sortedItems = parsedItems.garageItems.sort((a, b) => {
+          const nameA = a.name;
+          const nameB = b.name;
+          if (nameA < nameB) { return -1; }
+          if (nameA > nameB) { return 1; }
+          return 0;
+        });
+        sortedArray = sortedItems.slice();
+      }
+    })
+    .catch(error => console.error({ error }));
+
+  if ($('#sort-button').text() === 'Sort Ascending') {
+    sortedArray.forEach((item) => {
+      appendItem(item);
+    });
+    $('#sort-button').text('Sort Descending');
+  } else {
+    sortedArray.reverse().forEach((item) => {
+      appendItem(item);
+    });
+    $('#sort-button').text('Sort Ascending');
+  }
+};
+
+const increaseItemCount = (cleanlinessLevel) => {
+  const totalCount = parseInt($('#item-count').text(), 10) + 1;
+  $('#item-count').text(`${totalCount}`);
+
+  const cleanlinessCount = parseInt($(`#item-count-${cleanlinessLevel.toLowerCase()}`).text(), 10) + 1;
+  $(`#item-count-${cleanlinessLevel.toLowerCase()}`).text(cleanlinessCount);
+};
+
+const getCleanlinessCount = (garageItems, cleanlinessLevel) => {
+  return garageItems.filter(item => item.cleanliness === cleanlinessLevel).length;
+};
+
+const getTotalItemCount = (items) => {
+  $('#item-count').text(`${items.length}`);
+  $('#item-count-sparkling').text(`${getCleanlinessCount(items, 'Sparkling')}`);
+  $('#item-count-dusty').text(`${getCleanlinessCount(items, 'Dusty')}`);
+  $('#item-count-rancid').text(`${getCleanlinessCount(items, 'Rancid')}`);
+};
+
 const getAllItems = () => {
   fetch('/api/v1/items')
     .then(items => items.json())
     .then((parsedItems) => {
       if (parsedItems.garageItems.length) {
+        getTotalItemCount(parsedItems.garageItems);
         parsedItems.garageItems.forEach((item) => {
-          console.log('item: ', item);
-          // add item to page
+          appendItem(item);
         });
       }
     })
@@ -27,7 +100,7 @@ const enableSubmitButton = () => {
 const submitGarageItem = (event) => {
   event.preventDefault();
   const item = {
-    name: $('#name-input').val(),
+    name: $('#name-input').val().toLowerCase(),
     reason: $('#reason-input').val(),
     cleanliness: $('#cleanliness-input option:selected').val(),
   };
@@ -39,8 +112,15 @@ const submitGarageItem = (event) => {
       'Content-Type': 'application/json',
     },
   })
-    .then(() => {
-      // add item to page
+  // eslint-disable-next-line consistent-return
+    .then((response) => {
+      if (response.status === 201) {
+        return response.json();
+      }
+    })
+    .then((addedItem) => {
+      increaseItemCount(addedItem.garageItem.cleanliness);
+      appendItem(addedItem.garageItem);
     })
     .catch((error) => { throw error; });
 
@@ -48,12 +128,13 @@ const submitGarageItem = (event) => {
   $('#reason-input').val('');
 };
 
-window.onload = () => {
-  getAllItems();
-};
+
+getAllItems();
+
 
 $('#name-input').on('keyup', enableSubmitButton);
 $('#reason-input').on('keyup', enableSubmitButton);
 $('#cleanliness-input').on('change', enableSubmitButton);
 
 $('#submit-button').on('click', submitGarageItem);
+$('#sort-button').on('click', sort);

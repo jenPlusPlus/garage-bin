@@ -47,8 +47,8 @@ app.post('/api/v1/items', (request, response) => {
     }
   }
 
-  database('garage_items').insert(garageItem, 'id')
-    .then(insertedGarageItem => response.status(201).json({ id: insertedGarageItem[0] }))
+  database('garage_items').insert(garageItem, '*')
+    .then(insertedGarageItem => response.status(201).json({ garageItem: insertedGarageItem[0] }))
     .catch(error => response.status(500).json({ error }));
 
   return null;
@@ -64,7 +64,7 @@ app.patch('/api/v1/items/:id', (request, response) => {
       if (!updatedGarageItem.length) {
         return response.status(404).json({ error: `Could not find any item associated with id ${request.params.id}` });
       }
-      return response.status(204).json({ garageItem: updatedGarageItem[0] });
+      return response.status(202).json({ garageItem: updatedGarageItem[0] });
     })
     .catch(error => response.status(500).json({ error }));
 });
