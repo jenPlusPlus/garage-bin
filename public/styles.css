@@ -5,8 +5,12 @@
   font-family: 'Open Sans', sans-serif;
 }
 
+body {
+  height: 100vh;
+}
+
 header {
-  height: 30%;
+  height: 45%;
 }
 
 main {
@@ -38,7 +42,9 @@ main {
 }
 
 #garage {
-  background-image: url('./../assets/garage_door.jpg');
+  background-image: url('./garage_door.jpg');
+  height: 90%;
+  background-repeat: no-repeat;
 }
 
 .garage-item {
@@ -55,7 +61,15 @@ main {
   text-align: center;
 }
 
+#garage-header-container {
+  display: none;
+}
+
 .item-details {
+  display: none;
+}
+
+.garage-item-name {
   display: none;
 }
 

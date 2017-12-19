@@ -67,7 +67,7 @@ const appendItem = (item) => {
   let oldCleanlinessLevel;
   $('#garage-item-container').append(`
     <div class='garage-item' id='item-${item.id}'>
-      <h4 id='item-name-${item.id} class='garage-item-name'>${item.name}</h4>
+      <h4 id='item-name-${item.id}' class='garage-item-name'>${item.name}</h4>
         <div class='item-details'>
           <p id='item-reason-${item.id}'>Reason for Lingering: ${item.reason}</p>
           <p>To change the item's cleanliness, select a new option below.</p>
