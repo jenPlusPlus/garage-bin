@@ -17,6 +17,18 @@ const getCleanlinessCount = async (cleanlinessLevel) => {
   return cleanlinessCount;
 };
 
+const getTotalCount = async () => {
+  let totalCount;
+  await fetch('/api/v1/items')
+    .then(items => items.json())
+    .then((parsedItems) => {
+      totalCount = parsedItems.garageItems.length;
+    })
+    .catch(error => console.error({ error }));
+
+  return totalCount;
+};
+
 const updateCleanlinessDB = async (id, oldCleanliness, cleanliness) => {
   await fetch(`/api/v1/items/${id}`, {
     method: 'PATCH',
@@ -104,16 +116,14 @@ const sort = async () => {
   }
 };
 
-const increaseItemCount = (cleanlinessLevel) => {
-  const totalCount = parseInt($('#item-count').text(), 10) + 1;
-  $('#item-count').text(`${totalCount}`);
-
-  const cleanlinessCount = parseInt($(`#item-count-${cleanlinessLevel.toLowerCase()}`).text(), 10) + 1;
-  $(`#item-count-${cleanlinessLevel.toLowerCase()}`).text(cleanlinessCount);
-};
-
-const getTotalItemCount = (items) => {
-  $('#item-count').text(`${items.length}`);
+const getTotalItemCount = () => {
+  let totalCount;
+  getTotalCount()
+    .then((result) => {
+      totalCount = result;
+      $('#item-count').text(totalCount);
+    })
+    .catch((error) => { throw error; });
 
   let sparklingCount;
   getCleanlinessCount('Sparkling')
@@ -132,7 +142,7 @@ const getTotalItemCount = (items) => {
     .catch((error) => { throw error; });
 
   let rancidCount;
-  getCleanlinessCount('Dusty')
+  getCleanlinessCount('Rancid')
     .then((result) => {
       rancidCount = result;
       $('#item-count-rancid').text(rancidCount);
@@ -145,7 +155,7 @@ const getAllItems = () => {
     .then(items => items.json())
     .then((parsedItems) => {
       if (parsedItems.garageItems.length) {
-        getTotalItemCount(parsedItems.garageItems);
+        getTotalItemCount();
         parsedItems.garageItems.forEach((item) => {
           appendItem(item);
         });
@@ -164,7 +174,7 @@ const enableSubmitButton = () => {
   }
 };
 
-const submitGarageItem = (event) => {
+const submitGarageItem = async (event) => {
   event.preventDefault();
   const item = {
     name: $('#name-input').val().toLowerCase(),
@@ -172,7 +182,7 @@ const submitGarageItem = (event) => {
     cleanliness: $('#cleanliness-input option:selected').val(),
   };
 
-  fetch('/api/v1/items', {
+  await fetch('/api/v1/items', {
     method: 'POST',
     body: JSON.stringify(item),
     headers: {
@@ -186,11 +196,10 @@ const submitGarageItem = (event) => {
       }
     })
     .then((addedItem) => {
-      increaseItemCount(addedItem.garageItem.cleanliness);
       appendItem(addedItem.garageItem);
     })
     .catch((error) => { throw error; });
-
+  getTotalItemCount();
   $('#name-input').val('');
   $('#reason-input').val('');
 };
