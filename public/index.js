@@ -65,7 +65,7 @@ const isSelected = (selectedValue, cleanlinessLevel) => {
 
 const appendItem = (item) => {
   let oldCleanlinessLevel;
-  $('#garage').append(`
+  $('#garage-item-container').append(`
     <div class='garage-item' id='item-${item.id}'>
       <h4 id='item-name-${item.id} class='garage-item-name'>${item.name}</h4>
         <div class='item-details'>
