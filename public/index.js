@@ -14,8 +14,6 @@ const getCleanlinessCount = async (cleanlinessLevel) => {
     })
     .catch(error => console.error({ error }));
 
-  // why is the console.log right and the return wrong???
-  console.log('cleanlinessCount: ', cleanlinessLevel, cleanlinessCount);
   return cleanlinessCount;
 };
 
@@ -29,8 +27,21 @@ const updateCleanlinessDB = async (id, oldCleanliness, cleanliness) => {
   }).then()
     .catch((error) => { throw error; });
 
-  $(`#item-count-${oldCleanliness}`).text(`${getCleanlinessCount(oldCleanliness)}`);
-  $(`#item-count-${cleanliness}`).text(`${getCleanlinessCount(cleanliness)}`);
+  let oldCleanlinessCount;
+  getCleanlinessCount(oldCleanliness)
+    .then((result) => {
+      oldCleanlinessCount = result;
+      $(`#item-count-${oldCleanliness.toLowerCase()}`).text(oldCleanlinessCount);
+    })
+    .catch((error) => { throw error; });
+
+  let newCleanlinessCount;
+  getCleanlinessCount(cleanliness)
+    .then((result) => {
+      newCleanlinessCount = result;
+      $(`#item-count-${cleanliness.toLowerCase()}`).text(newCleanlinessCount);
+    })
+    .catch((error) => { throw error; });
 };
 
 const isSelected = (selectedValue, cleanlinessLevel) => {
@@ -103,9 +114,30 @@ const increaseItemCount = (cleanlinessLevel) => {
 
 const getTotalItemCount = (items) => {
   $('#item-count').text(`${items.length}`);
-  $('#item-count-sparkling').text(`${getCleanlinessCount('Sparkling')}`);
-  $('#item-count-dusty').text(`${getCleanlinessCount('Dusty')}`);
-  $('#item-count-rancid').text(`${getCleanlinessCount('Rancid')}`);
+
+  let sparklingCount;
+  getCleanlinessCount('Sparkling')
+    .then((result) => {
+      sparklingCount = result;
+      $('#item-count-sparkling').text(sparklingCount);
+    })
+    .catch((error) => { throw error; });
+
+  let dustyCount;
+  getCleanlinessCount('Dusty')
+    .then((result) => {
+      dustyCount = result;
+      $('#item-count-dusty').text(dustyCount);
+    })
+    .catch((error) => { throw error; });
+
+  let rancidCount;
+  getCleanlinessCount('Dusty')
+    .then((result) => {
+      rancidCount = result;
+      $('#item-count-rancid').text(rancidCount);
+    })
+    .catch((error) => { throw error; });
 };
 
 const getAllItems = () => {
