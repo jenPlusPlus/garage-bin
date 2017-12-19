@@ -4,6 +4,20 @@ const addItemDetails = () => {
   // change div display to block/inline-block
 };
 
+const updateCleanlinessDB = (item, cleanliness) => {
+  console.log(cleanliness);
+  const updatedItem = Object.assign({}, item, { cleanliness });
+  console.log(updatedItem);
+  fetch(`/api/v1/items/${item.id}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ cleanliness }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .catch((error) => { throw error; });
+};
+
 const appendItem = (item) => {
   $('#garage').append(`
     <div class='garage-item' id='item-${item.id}'>
@@ -19,6 +33,7 @@ const appendItem = (item) => {
         </div>
     </div>`);
   $('.garage-item-name').on('click', addItemDetails);
+  $(`#item-cleanliness-input-${item.id}`).on('change', (event) => updateCleanlinessDB(item, $(`#item-cleanliness-input-${item.id}`).val()));
 };
 
 const sort = async () => {
