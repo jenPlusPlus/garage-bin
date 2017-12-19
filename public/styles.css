@@ -41,10 +41,15 @@ main {
   text-align: center;
 }
 
-#garage {
-  background-image: url('./garage_door.jpg');
-  height: 90%;
-  background-repeat: no-repeat;
+#garage, img {
+  /* background-image: url('./garage_door.jpg'); */
+  height: 95%;
+  /* background-repeat: no-repeat; */
+  /* background-size: 100% 100%; */
+}
+
+img {
+  width: 100%;
 }
 
 .garage-item {
@@ -61,15 +66,12 @@ main {
   text-align: center;
 }
 
-#garage-header-container {
+.hidden {
   display: none;
+  /* visibility: hidden; */
 }
 
-.item-details {
-  display: none;
-}
-
-.garage-item-name {
+.hidden-item-details {
   display: none;
 }
 
