@@ -68,7 +68,7 @@ const appendItem = (item) => {
   $('#garage-item-container').append(`
     <div class='garage-item' id='item-${item.id}'>
       <h4 id='item-name-${item.id}' class='garage-item-name hidden'>${item.name}</h4>
-        <div class='item-details hidden-item-details'>
+        <div id='item-details-${item.id}' class='item-details hidden-item-details'>
           <p id='item-reason-${item.id}'>Reason for Lingering: ${item.reason}</p>
           <p>To change the item's cleanliness, select a new option below.</p>
           <select id='item-cleanliness-input-${item.id}'>
@@ -205,14 +205,13 @@ const submitGarageItem = async (event) => {
 };
 
 const toggleGarageDoor = () => {
-  console.log('clicked garage');
   $('img').slideToggle(2000);
   $('#garage-header-container').toggleClass('hidden');
   $('.garage-item-name').toggleClass('hidden');
-  if ($('#garage-items-title').text() === "Click here to see what's inside!") {
+  if ($('#garage-items-title').text() === 'Click here to open the garage!') {
     $('#garage-items-title').text('Click here to close the garage.');
   } else {
-    $('#garage-items-title').text("Click here to see what's inside!");
+    $('#garage-items-title').text('Click here to open the garage!');
   }
 };
 
