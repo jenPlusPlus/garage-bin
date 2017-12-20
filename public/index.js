@@ -64,10 +64,15 @@ const isSelected = (selectedValue, cleanlinessLevel) => {
 };
 
 const appendItem = (item) => {
+  let isHidden = 'hidden';
+  if ($('#garage-items-title').text() === 'Click here to close the garage.') {
+    isHidden = '';
+  }
+  console.log('hidden is: ', isHidden);
   let oldCleanlinessLevel;
   $('#garage-item-container').append(`
     <div class='garage-item' id='item-${item.id}'>
-      <h4 id='item-name-${item.id}' class='garage-item-name hidden'>${item.name}</h4>
+      <h4 id='item-name-${item.id}' class='garage-item-name ${isHidden}'>${item.name}</h4>
         <div id='item-details-${item.id}' class='item-details hidden-item-details'>
           <p id='item-reason-${item.id}'>Reason for Lingering: ${item.reason}</p>
           <p>To change the item's cleanliness, select a new option below.</p>
