@@ -17,6 +17,10 @@ main {
   height: 70%;
 }
 
+p {
+  font-size: 14px;
+}
+
 .form {
 
 }
@@ -42,10 +46,7 @@ main {
 }
 
 #garage, img {
-  /* background-image: url('./garage_door.jpg'); */
   height: 95%;
-  /* background-repeat: no-repeat; */
-  /* background-size: 100% 100%; */
 }
 
 img {
@@ -54,6 +55,9 @@ img {
 
 .garage-item {
   margin: 10px;
+  width: 21%;
+  border: 1px solid grey;
+  flex-shrink: 2;
 }
 
 #garage-item-container {
@@ -61,6 +65,8 @@ img {
   flex-direction: row;
   flex-wrap: wrap;
   height: 100%;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 #instructions, #garage-items-title, #welcome-title {

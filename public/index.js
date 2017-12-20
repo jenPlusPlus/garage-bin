@@ -1,7 +1,9 @@
 /* eslint-disable no-undef */
 
-const addItemDetails = () => {
-  // change div display to block/inline-block
+const toggleItemDetails = (itemID) => {
+  console.log('clicked: ', itemID);
+  $(`#item-details-${itemID}`).toggleClass('hidden-item-details');
+  $(`#item-itemID`).toggleClass('expanded');
 };
 
 const getCleanlinessCount = async (cleanlinessLevel) => {
@@ -68,7 +70,6 @@ const appendItem = (item) => {
   if ($('#garage-items-title').text() === 'Click here to close the garage.') {
     isHidden = '';
   }
-  console.log('hidden is: ', isHidden);
   let oldCleanlinessLevel;
   $('#garage-item-container').append(`
     <div class='garage-item' id='item-${item.id}'>
@@ -83,9 +84,9 @@ const appendItem = (item) => {
           </select>
         </div>
     </div>`);
-  $('.garage-item-name').on('click', addItemDetails);
   $(`#item-cleanliness-input-${item.id}`).on('click', () => { oldCleanlinessLevel = $(`#item-cleanliness-input-${item.id}`).val(); });
   $(`#item-cleanliness-input-${item.id}`).on('change', () => updateCleanlinessDB(item.id, oldCleanlinessLevel, $(`#item-cleanliness-input-${item.id}`).val()));
+  $(`#item-name-${item.id}`).on('click', () => toggleItemDetails(item.id));
 };
 
 const sort = async () => {
