@@ -128,10 +128,11 @@ const getTotalItemCount = () => {
     .then((result) => {
       totalCount = result;
       $('#item-count').text(totalCount);
+      if (totalCount > 0) {
+        $('#empty-garage').remove();
+      }
     })
     .catch((error) => { throw error; });
-
-  console.log('total: ', total);
 
   let sparklingCount;
   getCleanlinessCount('Sparkling')
