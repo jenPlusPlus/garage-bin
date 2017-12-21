@@ -181,6 +181,7 @@ const enableSubmitButton = () => {
 };
 
 const submitGarageItem = async (event) => {
+  $('#empty-garage').remove();
   event.preventDefault();
   const item = {
     name: $('#name-input').val().toLowerCase(),
