@@ -181,7 +181,6 @@ const enableSubmitButton = () => {
 };
 
 const submitGarageItem = async (event) => {
-  $('#empty-garage').remove();
   event.preventDefault();
   const item = {
     name: $('#name-input').val().toLowerCase(),
@@ -203,6 +202,7 @@ const submitGarageItem = async (event) => {
       }
     })
     .then((addedItem) => {
+      $('#empty-garage').remove();
       appendItem(addedItem.garageItem);
     })
     .catch((error) => { throw error; });
