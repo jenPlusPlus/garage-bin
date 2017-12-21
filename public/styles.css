@@ -116,6 +116,7 @@ img {
   padding: 5px;
   background-color: #3A606E;
   color: #162328;
+  border: 1px solid grey;
 }
 
 #garage-item-container.visible {
