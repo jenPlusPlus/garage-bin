@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 
 const toggleItemDetails = (itemID) => {
-  console.log('clicked: ', itemID);
   $(`#item-details-${itemID}`).toggleClass('hidden-item-details');
   $(`#item-itemID`).toggleClass('expanded');
 };
