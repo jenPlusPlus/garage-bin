@@ -71,6 +71,8 @@ button, .garage-item-name {
 
 #empty-garage {
   margin: auto;
+  display: block;
+  width: 225px;
 }
 
 #form {

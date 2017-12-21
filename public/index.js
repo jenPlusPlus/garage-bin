@@ -131,6 +131,8 @@ const getTotalItemCount = () => {
     })
     .catch((error) => { throw error; });
 
+  console.log('total: ', total);
+
   let sparklingCount;
   getCleanlinessCount('Sparkling')
     .then((result) => {
@@ -160,6 +162,7 @@ const getAllItems = () => {
   fetch('/api/v1/items')
     .then(items => items.json())
     .then((parsedItems) => {
+      console.log('parsed items: ', parsedItems);
       if (parsedItems.garageItems.length) {
         getTotalItemCount();
         parsedItems.garageItems.forEach((item) => {
@@ -202,7 +205,6 @@ const submitGarageItem = async (event) => {
       }
     })
     .then((addedItem) => {
-      $('#empty-garage').remove();
       appendItem(addedItem.garageItem);
     })
     .catch((error) => { throw error; });
