@@ -7,70 +7,125 @@
 
 body {
   height: 100vh;
+  background-color: #CD8987;
 }
 
 header {
-  height: 45%;
+  height: 33%;
 }
 
 main {
-  height: 70%;
+  height: 67%;
+}
+
+header, main {
+  padding: 1px;
 }
 
 p {
   font-size: 14px;
+  color: ##1A090D;
 }
 
-.form {
-
+#submit-button, #sort-button {
+  background-color: #607B7D;
+  color: #1A090D;
+  border: 1px solid #CECECE;
 }
 
 .form-item {
-    width: 200px;
-    margin: 10px;
+  width: 200px;
+  margin: 5px;
+  border: solid 1px grey;
+  border-radius: 5px;
 }
 
 #name-input, #cleanliness-input, #submit-button {
   height: 30px;
 }
 
+#cleanliness-input {
+  color: grey;
+}
+
+#submit-button {
+  margin: 5px auto;
+  display: block;
+}
+
+#name-input, #reason-input {
+  padding: 0 0 2px 5px;
+}
+
+#inputs-container-1 {
+  align-items: flex-end;
+}
+
+#input-container-2 {
+  align-items: flex-start;
+}
+
+button, .garage-item-name {
+  cursor: pointer;
+}
+
 #form {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
+  height: 65%;
+}
+
+#form-container {
+  height: 62%;
+}
+
+#reason-input {
+  padding-top: 2px;
+  height: 70px;
+  resize: none;
 }
 
 #garage-count {
   text-align: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
-#garage, img {
-  height: 95%;
+#garage-header-container {
+  margin: 10px;
+  height: 30%;
+}
+
+#garage {
+  height: 93%;
 }
 
 img {
   width: 100%;
+  height: 100%;
 }
 
 .garage-item {
   margin: 10px;
-  width: 21%;
-  border: 1px solid grey;
+  width: 47%;
   flex-shrink: 2;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: #3A606E;
+  color: #162328;
 }
 
-#garage-item-container {
+#garage-item-container.visible {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  height: 100%;
+  height: 70%;
   justify-content: center;
   align-items: flex-start;
-}
-
-#instructions, #garage-items-title, #welcome-title {
-  text-align: center;
+  overflow-y: scroll;
 }
 
 .hidden {
@@ -78,16 +133,57 @@ img {
   /* visibility: hidden; */
 }
 
+#instructions-form, #garage-items-instructions, #welcome-title {
+  text-align: center;
+}
+
+#instructions-form {
+  margin-bottom: 10px;
+}
+
+#garage-items-instructions {
+  cursor: pointer;
+  margin: 5px 0;
+}
+
+.instructions {
+  font-style: italic;
+}
+
+#item-details-instructions {
+  text-align: center;
+  margin: 16px 0;
+}
+
+#reason-label {
+  font-weight: bold;
+}
+
 .hidden-item-details {
   display: none;
+}
+
+.inputs-container {
+  width: 49%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  height: 100%;
+}
+
+.count-label {
+  width: 48%;
+  margin: 5px;
 }
 
 #sort-button {
   width: 200px;
   display: block;
-  margin: auto;
+  margin: 5px auto;
+  border-radius: 5px;
+  height: 30px;
 }
 
-#reason-input {
-  height: 50px;
+#welcome-title {
+  margin: 10px 0;
 }

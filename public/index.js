@@ -67,16 +67,16 @@ const isSelected = (selectedValue, cleanlinessLevel) => {
 
 const appendItem = (item) => {
   let isHidden = 'hidden';
-  if ($('#garage-items-title').text() === 'Click here to close the garage.') {
+  if ($('#garage-items-instructions').text() === 'Click here to close the garage!') {
     isHidden = '';
   }
   let oldCleanlinessLevel;
   $('#garage-item-container').append(`
-    <div class='garage-item' id='item-${item.id}'>
-      <h4 id='item-name-${item.id}' class='garage-item-name ${isHidden}'>${item.name}</h4>
+    <div class='garage-item ${isHidden}' id='item-${item.id}'>
+      <h4 id='item-name-${item.id}' class='garage-item-name'>${item.name}</h4>
         <div id='item-details-${item.id}' class='item-details hidden-item-details'>
-          <p id='item-reason-${item.id}'>Reason for Lingering: ${item.reason}</p>
-          <p>To change the item's cleanliness, select a new option below.</p>
+          <p id='item-reason-${item.id}'><span id='reason-label'>Reason for Lingering:</span> ${item.reason}</p>
+          <p class='instructions-cleanliness instructions'>To change the item's cleanliness, select a new option below.</p>
           <select id='item-cleanliness-input-${item.id}'>
             <option id='item-sparkling-${item.id}' value="Sparkling" ${isSelected('Sparkling', item.cleanliness)} >Sparkling</option>
             <option id='item-dusty-${item.id}' value="Dusty" ${isSelected('Dusty', item.cleanliness)}>Dusty</option>
@@ -213,11 +213,13 @@ const submitGarageItem = async (event) => {
 const toggleGarageDoor = () => {
   $('img').slideToggle(2000);
   $('#garage-header-container').toggleClass('hidden');
-  $('.garage-item-name').toggleClass('hidden');
-  if ($('#garage-items-title').text() === 'Click here to open the garage!') {
-    $('#garage-items-title').text('Click here to close the garage.');
+  $('.garage-item').toggleClass('hidden');
+  $('#garage-item-container').toggleClass('hidden');
+  $('#garage-item-container').toggleClass('visible');
+  if ($('#garage-items-instructions').text() === 'Click here to open the garage!') {
+    $('#garage-items-instructions').text('Click here to close the garage!');
   } else {
-    $('#garage-items-title').text('Click here to open the garage!');
+    $('#garage-items-instructions').text('Click here to open the garage!');
   }
 };
 
@@ -232,4 +234,4 @@ $('#cleanliness-input').on('change', enableSubmitButton);
 $('#submit-button').on('click', submitGarageItem);
 $('#sort-button').on('click', sort);
 
-$('#garage-items-title').on('click', toggleGarageDoor);
+$('#garage-items-instructions').on('click', toggleGarageDoor);
