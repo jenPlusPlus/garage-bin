@@ -3,35 +3,47 @@
   <head>
     <meta charset="utf-8">
     <title>Garage-Bin</title>
+    <link rel="stylesheet" href="./styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
     <header>
       <h1 id='welcome-title'>Welcome to Garage Bin!</h1>
-      <h3 id='instructions'>Fill out the form below to add an item to the garage.</h3>
-      <div id='form'>
-        <input type='text' id='name-input' name='name' placeholder='Item name'></input>
-        <select name='cleanliness-input' id='cleanliness-input'>
-          <option label>Choose Cleanliness</option>
-          <option value="Sparkling">Sparkling</option>
-          <option value="Dusty">Dusty</option>
-          <option value="Rancid">Rancid</option>
-        </select>
-        <textarea id='reason-input' name='reason' placeholder='Reason item is in garage'></textarea>
-        <button disabled id='submit-button' type='submit'>Submit</button>
+      <p class='instructions' id='instructions-form'>Fill out the form below to add an item to the garage.</p>
+      <div id='form-container'>
+        <div id='form'>
+          <div id='inputs-container-1' class='inputs-container'>
+            <input class='form-item' type='text' id='name-input' name='name' placeholder='Item name'></input>
+            <select class='form-item' name='cleanliness-input' id='cleanliness-input'>
+              <option label>Choose Cleanliness</option>
+              <option value="Sparkling">Sparkling</option>
+              <option value="Dusty">Dusty</option>
+              <option value="Rancid">Rancid</option>
+            </select>
+          </div>
+          <div id='inputs-container-2' class='inputs-container'>
+            <textarea class='form-item' id='reason-input' name='reason' placeholder='Reason item is in garage' maxlength=300></textarea>
+          </div>
+        </div>
+        <button class='form-item' disabled id='submit-button' type='submit'>Submit</button>
       </div>
     </header>
     <main id='garage-container'>
-      <h3 id='garage-items-title'>Click on the garage door to see what's inside!</h3>
+      <h3 id='garage-items-instructions' class='instructions'>Click here to open the garage!</h3>
       <div id='garage'>
-        <div id='garage-header-container'>
+      <img src="./garage_door.jpg" alt="garage door">
+        <div id='garage-header-container' class='hidden'>
           <div id='garage-count'>
-            <p id='item-count-label'>Total number of items: <span id='item-count'></span></p>
-            <p id='item-count-sparkling-label'>Number of Sparking items: <span id='item-count-sparkling'></span></p>
-            <p id='item-count-dusty-label'>Number of Dusty items: <span id='item-count-dusty'></span></p>
-            <p id='item-count-rancid-label'>Number of Rancid items: <span id='item-count-rancid'></span></p>
+            <p id='item-count-label' class='count-label'>Total number of items: <span id='item-count'></span></p>
+            <p id='item-count-sparkling-label' class='count-label'>Number of Sparking items: <span id='item-count-sparkling'></span></p>
+            <p id='item-count-dusty-label' class='count-label'>Number of Dusty items: <span id='item-count-dusty'></span></p>
+            <p id='item-count-rancid-label' class='count-label'>Number of Rancid items: <span id='item-count-rancid'></span></p>
           </div>
           <button id='sort-button'>Sort Ascending</button>
-        </div>
+          <p id='item-details-instructions' class='instructions'>Click an item name to see or hide its details.</p>
+          </div>
+          <div id='garage-item-container' class='hidden'></div>
       </div>
     </main>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
