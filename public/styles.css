@@ -69,6 +69,10 @@ button, .garage-item-name {
   cursor: pointer;
 }
 
+#empty-garage {
+  margin: auto;
+}
+
 #form {
   display: flex;
   flex-direction: row;
