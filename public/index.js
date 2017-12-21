@@ -162,7 +162,7 @@ const getAllItems = () => {
   fetch('/api/v1/items')
     .then(items => items.json())
     .then((parsedItems) => {
-      if (parsedItems && parsedItems.garageItems.length) {
+      if (parsedItems.garageItems.length) {
         getTotalItemCount();
         parsedItems.garageItems.forEach((item) => {
           appendItem(item);

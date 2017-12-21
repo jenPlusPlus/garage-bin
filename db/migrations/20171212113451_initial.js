@@ -1,7 +1,7 @@
 
 exports.up = (knex, Promise) =>
   Promise.all([
-    knex.schema.createTable('garage_items', (table) => {
+    knex.schema.createTable('garageitems', (table) => {
       table.increments('id').primary();
       table.string('name');
       table.string('reason');
@@ -13,5 +13,5 @@ exports.up = (knex, Promise) =>
 
 exports.down = (knex, Promise) =>
   Promise.all([
-    knex.schema.dropTable('garage_items'),
+    knex.schema.dropTable('garageitems'),
   ]);
